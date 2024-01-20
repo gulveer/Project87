@@ -23,6 +23,16 @@ export default class PostScreen extends Component {
     };
   }
 
+  fetchUser = () => {
+    let theme;
+    firebase.database().ref("/users/" + firebase.auth().currentUser.uid).on("value", (snapshot) => {
+  
+    theme = snapshot.val().current_theme
+    this.setState({ light_theme: theme === "light" })
+    
+    })
+  }
+
   render() {
     if (!this.props.route.params) {
       this.props.navigation.navigate("Home");
